@@ -1,0 +1,33 @@
+.data
+jpline: .asciiz  "\n"
+
+.text
+
+main:
+        li		$v0, 5		# $v0 = 5
+        syscall
+        move 	$t0, $v0		# $t0 = $v0
+
+        li		$v0, 5		# $v0 = 5
+        syscall
+        move 	$t1, $v0		# $t1 = $v0
+
+        sub		$a0, $t0, $t1		# $s0 = $t1 + $t2
+
+        li		$v0, 1 		# $v0 = 1
+        syscall
+
+        li		$v0, 4		# $v0 = 4
+        la		$a0, jpline		# 
+        syscall
+        
+        li		$v0, 10 		# $v0 = 1
+        syscall
+
+        
+        
+
+        
+        
+        
+        

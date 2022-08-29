@@ -1,0 +1,93 @@
+.data
+jpline: .asciiz  "\n"
+ast:    .asciiz "*"
+
+.text
+
+main:
+        li		$v0, 5		# $v0 = 5
+        syscall
+        move 	        $a1, $v0		# $t0 = $v0
+
+        li		$a2, 0		# $a2 = 1
+        li		$a3, 1		# $a3 = 1
+        jal		incCount				# jump to reduzCount and save position to $ra
+        
+        li		$v0, 4		# $v0 = 4
+        la		$a0, jpline		# 
+        syscall
+        
+        li		$v0, 10 		# $v0 = 1
+        syscall
+
+
+incCount:
+        beq		$a2, $a1, exitIncCount	# if $a2 == $a1 then exitIncCount
+
+        addi	        $sp, $sp, -8			# $sp = $sp + -4
+        sw		$s0, 4($sp)		# 
+        sw		$ra, 0($sp)		# 
+        
+        li		$s1, 1		# $s1 = 1
+        jal		printAst				# jump to printAst and save position to $ra
+        
+        li		$v0, 4		# $v0 = 4
+        la		$a0, jpline		# 
+        syscall
+
+        addi	        $a2, $a2, 1			# $a2 = $a2 + 1
+        addi	        $a3, $a3, 2			# $a3 = $a3 + 2
+        
+        lw		$ra, 0($sp)		# 
+        lw		$s0, 4($sp)		# 
+        addi	        $sp, $sp, 8			# $sp = $sp + 4
+        
+        
+    
+        j		incCount				# jump to calculaViagem
+
+printAst:
+        
+        
+        li		$v0, 4		# $v0 = 4
+        la		$a0, ast		# 
+        syscall
+
+        beq		$s1, $a3, exitPrintAst	# if $s1 == $a3 then exitPrintAst
+        addi	        $s1, $s1, 1			# $s1 = $s1 + 1
+        
+        j		printAst				# jump to printAst
+        
+
+exitPrintAst:
+        jr		$ra					# jump to $ra
+    
+exitIncCount:
+        li		$v0, 4		# $v0 = 4
+        la		$a0, jpline		# 
+        syscall
+        jr		$ra					# jump to $ra
+    
+        
+        
+        
+        
+        
+        
+
+    
+        
+        
+        
+        
+        
+        
+
+
+        
+        
+
+        
+        
+        
+        

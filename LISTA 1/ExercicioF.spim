@@ -1,0 +1,42 @@
+elemDistintos:
+        addi	$sp, $sp, -8			# $sp = $sp + -8
+        sw		$ra, 4($sp)		# 
+        sw		$s0, 0($sp)		# 
+        
+        li		$a2, 0		# $a2 = 0
+        li		$a3, 0		# $a3 = 0
+        addi	$a1, $a1, -1			# $a1 = $a1 + -1
+        jal		for				# jump to for and save position to $ra
+
+        move 	$v0, $a3		# $v0 = $a3
+        addi	$v0, $v0, 1			# $v0 = $v0 + 1
+
+        lw		$s0, 0($sp)		# 
+        lw		$ra, 4($sp)		# 
+        addi	$sp, $sp, 8			# $sp = $sp + 8
+
+        jr		$ra					# jump to $ra
+        
+
+        
+        
+for:
+    beq		$a2, $a1, exit	# if $a2 == $a1 then Exit
+
+    
+    lw		$t0, 0($a0)		# 
+    addi	$a0, $a0, 4			# $a0 = $a0 + 1
+    lw		$t1, 0($a0)		# 
+
+    addi	$a2, $a2, 1			# $a2 = $a2 + 1
+
+    bne		$t0, $t1, soma	# if $t0 != $t1 then soma
+    j		for				# jump to for
+    
+
+soma:
+    addi	$a3, $a3, 1			# $a2 = $a2 + 1
+    j		for				# jump to for
+    
+exit:
+    jr		$ra					# jump to $ra

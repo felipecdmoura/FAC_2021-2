@@ -1,0 +1,17 @@
+.data
+
+str:    .asciiz     "Ola Mundo"
+jpline: .asciiz     "\n"
+
+.text
+
+main:
+        li		$v0, 4		# $v0 = 4
+        la		$a0, str		# 
+        syscall
+
+        la		$a0, jpline		#
+        syscall
+        
+        
+        

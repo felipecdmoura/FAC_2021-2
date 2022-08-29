@@ -1,0 +1,73 @@
+.data
+jpline: .asciiz  "\n"
+
+.text
+
+main:
+        li		$v0, 5		# $v0 = 5
+        syscall
+        move 	$a1, $v0		# $t0 = $v0
+
+        li		$v0, 5		# $v0 = 5
+        syscall
+        move 	$a2, $v0		# $t1 = $v0
+
+        move 	$s0, $zero		# $s0 = $zero
+        jal		calculaViagem				# jump to calculaViagem and save position to $ra
+
+        li		$v0, 1		# $v0 = 1
+        move 	$a0, $s0		# $a0 = $s3
+        syscall
+        
+        li		$v0, 4		# $v0 = 4
+        la		$a0, jpline		# 
+        syscall
+        
+        li		$v0, 10 		# $v0 = 1
+        syscall
+
+
+calculaViagem:
+        addi	$sp, $sp, -4			# $sp = $sp + -4
+        sw		$s0, 0($sp)		# 
+
+        addi	$t0, $a1, -1			# $t0 = $a0 + -1
+        sub		$a2, $a2, $t0		# $a2 = $a2 - $t0
+
+        slt		$t1, $a2, $zero		# $t1 = ($a2 < $zero) ? 1 : 0
+        bne		$t1, $zero, Exit	# if $t1 != $zero then Exit1
+        beq		$a2, $zero, Exit	# if $a2 == $zero then Exit2
+        
+        addi	$s0, $s0, 1			# $s0 = $s0 + 1
+
+        j		calculaViagem				# jump to calculaViagem
+
+Exit:
+    addi	$s0, $s0, 1			# $s0 = $s0 + 1
+    jr		$ra					# jump to $ra
+    
+
+    
+        
+        
+        
+        
+        
+        
+
+    
+        
+        
+        
+        
+        
+        
+
+
+        
+        
+
+        
+        
+        
+        

@@ -1,0 +1,59 @@
+.data
+quebralinha: .asciiz	"\n"
+overflow2: .asciiz "overflow"
+.text
+
+	li $v0, 5
+    	syscall
+    	move $t8, $v0
+
+    	li $v0, 5
+    	syscall
+    	move $t1, $v0
+
+    	li $v0, 5
+    	syscall
+    	move $t2, $v0
+    	
+    	beq $t8, $zero, semsinal
+    	bne $t8, $zero, comsinal
+	
+comsinal:
+	#Faz adi��o das duas entradas
+	addu $t0, $t1, $t2
+	
+	xor $t4, $t1, $t2
+	
+	slt $t4 , $t4, $zero
+	bne $t4, $zero, sem_overflow
+	
+	xor $t4, $t0, $t1
+	slt $t4, $t4, $zero
+	bne $t4, $zero, overflow
+
+	j		sem_overflow				# jump to sem_overflow
+	
+semsinal:
+	
+  	nor $t3, $t1, $zero
+	sltu $t3, $t3, $t2
+	bne $t3, $zero, overflow
+	
+	j sem_overflow
+	
+overflow:
+	li $v0, 4
+	la $a0, overflow2
+	syscall
+	j end
+
+sem_overflow:
+	addu $t0, $t1, $t2
+	
+	li $v0, 1
+	move $a0, $t0
+	syscall
+	j end 
+end:
+	li	$v0, 10
+	syscall
